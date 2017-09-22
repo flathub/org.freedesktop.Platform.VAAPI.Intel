@@ -1,0 +1,38 @@
+{
+    "id": "org.freedesktop.Platform.VAAPI.Intel",
+    "branch": "1.6",
+    "runtime": "org.freedesktop.Platform",
+    "build-extension": true,
+    "sdk": "org.freedesktop.Sdk",
+    "runtime-version": "1.6",
+    "separate-locales": false,
+    "appstream-compose": false,
+    "modules": [
+        {
+            "name": "intel-vaapi-driver",
+            "cleanup": ["*.la"],
+            "config-opts": [ "--disable-static", "LIBVA_DRIVERS_PATH=/usr/lib/dri/intel-vaapi-driver" ],
+            "sources": [
+                {
+                    "type": "archive",
+                    "url": "https://www.freedesktop.org/software/vaapi/releases/libva-intel-driver/intel-vaapi-driver-1.8.2.tar.bz2",
+                    "sha256": "866cdf9974911e58b0d3a2cade29dbe7b5b68836e142cf092b99db68e366b702"
+                }
+            ]
+        },
+        {
+            "name": "appdata",
+            "buildsystem": "simple",
+            "build-commands": [
+                "install -Dm644 --target-directory=${FLATPAK_DEST}/share/appdata org.freedesktop.Platform.VAAPI.Intel.appdata.xml",
+                "appstream-compose --basename=org.freedesktop.Platform.VAAPI.Intel --prefix=${FLATPAK_DEST} --origin=flatpak org.freedesktop.Platform.VAAPI.Intel"
+            ],
+            "sources": [
+                {
+                    "type": "file",
+                    "path": "org.freedesktop.Platform.VAAPI.Intel.appdata.xml"
+                }
+            ]
+        }
+    ]
+}
